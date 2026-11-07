@@ -2,7 +2,6 @@
 
 <img width="1199" height="817" alt="image" src="https://github.com/user-attachments/assets/65f8da00-9b37-402f-80e7-f86e92f3492b" />
 
-
 Like with the original Fairbuds, the Fairbuds app only exposes limited EQ functionality for the Fairbuds 2.  
 This web app provides the full parametric EQ available on the Fairbuds 2.
 The interface is inspired by Fabfilter Pro-Q.
@@ -17,16 +16,17 @@ Unofficial and not affiliated with Fairphone.
 
 Open the page in a browser with [Web Bluetooth](https://caniuse.com/web-bluetooth):
 
-- **Android:** Chrome. Confirm the pairing prompt the first time you connect.
-- **Windows:** Chrome, Edge or Brave. In Brave, enable `brave://flags/#brave-web-bluetooth-api` first. Before the first
-  connect, pair the buds once more in Settings → Bluetooth → Add device → Bluetooth and
-  pick "Fairbuds 2". This adds the connection the page uses; the audio pairing does not cover it. The page waits and
-  connects by itself once you have done this.
-- **macOS, ChromeOS:** Chrome should work but is untested. **Linux:** Chrome with
-  `chrome://flags/#enable-experimental-web-platform-features`, untested.
-- Firefox and Safari have no Web Bluetooth, and neither has any browser on iOS.
+0. Pair the Fairbuds 2 control channel, this only needs to be done once. **This is not the same as audio pairing**
+  - **Android:** Chrome. Confirm the pairing prompt the first time you connect.
+  - **Windows:** Chrome, Edge or Brave. In Brave, enable `brave://flags/#brave-web-bluetooth-api` first. Before the first
+    connect, pair the buds once more in Settings → Bluetooth → Add device → Bluetooth → Show all devices → 
+    pick "Fairbuds 2". This adds the connection the page uses; the audio pairing does not cover it. Your buds do not need to be in pairing mode for this.
+  - **macOS, ChromeOS:** Chrome should work but is untested. **Linux:** Chrome with
+    `chrome://flags/#enable-experimental-web-platform-features`, untested.
+  - Firefox and Safari have no Web Bluetooth, and neither has any browser on iOS.
 
-Then:
+> [!NOTE]
+> You don't need to run the web app on the same device used for audio. You can play audio through your phone and tweak EQ settings live from your computer.
 
 1. **Connect** and pick your Fairbuds 2.
 2. Start from a preset, from what is stored on the buds, or from scratch. Drag the points, scroll to change Q, and hold
