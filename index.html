@@ -97,8 +97,31 @@
   </details>
 
   <details class="card fold">
-    <summary>Controls</summary>
-    <div class="fold-body">
+    <summary>Usage</summary>
+    <div class="fold-body usage">
+      <p>Open the page in a browser with <a href="https://caniuse.com/web-bluetooth">Web Bluetooth</a>:</p>
+      <ol start="0">
+        <li>Pair the Fairbuds 2 control channel, this only needs to be done once. <b>This is not the same as audio pairing</b>
+          <ul>
+            <li><b>Android:</b> Chrome. Confirm the pairing prompt the first time you connect.</li>
+            <li><b>Windows:</b> Chrome, Edge or Brave. In Brave, enable <code>brave://flags/#brave-web-bluetooth-api</code> first. Before the first
+              connect, pair the buds once more in Settings → Bluetooth → Add device → Bluetooth → Show all devices →
+              pick "Fairbuds 2". This adds the connection the page uses; the audio pairing does not cover it. Your buds do not need to be in pairing mode for this.</li>
+            <li><b>macOS, ChromeOS:</b> Chrome should work but is untested. <b>Linux:</b> Chrome with
+              <code>chrome://flags/#enable-experimental-web-platform-features</code>, untested.</li>
+            <li>Firefox and Safari have no Web Bluetooth, and neither has any browser on iOS.</li>
+          </ul>
+        </li>
+      </ol>
+      <p class="note">You don't need to run the web app on the same device used for audio. You can play audio through your phone and tweak EQ settings live from your computer.</p>
+      <ol start="1">
+        <li><b>Connect</b> and pick your Fairbuds 2.</li>
+        <li>Start from a preset, from what is stored on the buds, or from scratch. Drag the points, scroll to change Q, and hold
+          the headphone icon under a point to hear only that band.</li>
+        <li>Use <b>A</b> and <b>B</b> to compare two settings.</li>
+        <li><b>Save to buds</b> when you are happy. Until then, nothing is stored and the buds go back to their saved EQ after a
+          restart.</li>
+      </ol>
       <dl class="keys">
         <dt>Drag points</dt><dd>Frequency and gain (Hold Shift for fine adjustment)</dd>
         <dt>Scroll</dt><dd>Q of the selected band</dd>

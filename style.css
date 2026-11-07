@@ -213,6 +213,17 @@ textarea { display: block; width: 100%; min-height: 140px; margin-top: 10px; pad
 .file { position: relative; overflow: hidden; }
 .file input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
 .hint { font-size: 13px; color: var(--muted); margin: 8px 0 0; }
+.usage { font-size: 14px; }
+.usage > p { margin: 0 0 8px; }
+.usage ol, .usage ul { margin: 0 0 12px; padding-left: 22px; }
+.usage li { margin-bottom: 6px; }
+.usage ul { margin: 6px 0 0; }
+.usage ul li { color: var(--muted); }
+.usage ul b { color: var(--fg); }
+.usage a { color: inherit; text-underline-offset: 3px; }
+.usage code { font: 12.5px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--sunken); padding: 1px 5px; border-radius: 4px; overflow-wrap: anywhere; }
+.usage .note { margin: 0 0 12px; padding: 10px 12px; border-radius: 8px; background: var(--sunken); }
+.usage .keys { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
 .keys { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0; font-size: 14px; }
 .keys dt { font-weight: 600; }
 .keys dd { margin: 0; color: var(--muted); }
