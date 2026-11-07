@@ -1,0 +1,5 @@
+[
+  { "id": "fairbuds-app", "name": "Fairbuds app", "reference": "default" },
+  { "id": "community", "name": "Community" },
+  { "id": "autoeq-fairbuds1", "name": "AutoEq for the original Fairbuds" }
+]

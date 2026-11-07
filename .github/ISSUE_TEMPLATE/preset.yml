@@ -1,0 +1,36 @@
+name: Submit a preset
+description: Share an EQ for the Fairbuds 2.
+title: "Preset: "
+labels: [preset]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Name
+    validations:
+      required: true
+  - type: input
+    id: author
+    attributes:
+      label: Author
+      description: Name or handle to credit.
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What it sounds like and what it is based on (measurements, by ear, a target curve).
+    validations:
+      required: true
+  - type: textarea
+    id: eq
+    attributes:
+      label: EQ
+      description: Filled in by the page.
+      render: text
+    validations:
+      required: true
+  - type: input
+    id: link
+    attributes:
+      label: Try it
+      description: Opens this EQ in the page. Filled in by the page.

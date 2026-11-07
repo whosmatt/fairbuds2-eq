@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="repository" content="">
+<meta name="description" content="Parametric EQ for the Fairbuds 2 in the browser, over Web Bluetooth.">
+<meta name="theme-color" content="#00433d">
+<title>fairbuds2-eq</title>
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<script type="module" src="src/app.js"></script>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap bar-inner">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 20c4 0 5-9 9-9s4 13 9 13 4-10 8-10"/></svg>
+      <h1>fairbuds2-eq</h1>
+    </div>
+    <span id="status" class="status" role="status">Not connected</span>
+    <button id="conn" class="btn primary">Connect</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <p id="connmsg" class="msg" role="alert"></p>
+
+  <section class="card" aria-label="Equalizer">
+    <div class="toolbar">
+      <div class="seg" role="group" aria-label="Compare settings">
+        <button id="abA" aria-pressed="true" title="Setting A (key A)">A</button>
+        <button id="abB" aria-pressed="false" title="Setting B (key B)">B</button>
+      </div>
+      <button id="abcopy" class="btn quiet">Copy to B</button>
+      <select id="preset" class="btn" aria-label="Load a preset"></select>
+      <span class="grow"></span>
+      <label class="num">Preamp <input id="pre" type="number" step="0.5" min="-24" max="12" inputmode="decimal"> dB</label>
+      <button id="undo" class="btn icon" title="Undo (Ctrl+Z)" aria-label="Undo">
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 4 3 8l4 4M3.5 8H12a5 5 0 0 1 0 10H8"/></svg>
+      </button>
+      <button id="add" class="btn">Add band</button>
+    </div>
+
+    <div id="editor" class="editor">
+      <svg class="plot" role="img" aria-label="Frequency response. Drag a numbered point to change a band."></svg>
+      <div class="bandbar">
+      <p class="bandbar-empty">No band selected</p>
+      <div class="pop" role="group" aria-label="Band settings" inert>
+        <div class="pop-head"><i class="swatch"></i><span class="pop-title">Band</span><button class="close" aria-label="Close">×</button></div>
+        <div class="types" role="group" aria-label="Filter type"></div>
+        <div class="fields">
+          <label>Frequency<span><input name="f" type="number" min="20" max="20000" step="1" inputmode="decimal"> Hz</span></label>
+          <label>Gain<span><input name="gain" type="number" min="-24" max="24" step="0.1" inputmode="decimal"> dB</span></label>
+          <label>Q<span><input name="q" type="number" min="0.1" max="20" step="0.01" inputmode="decimal"></span></label>
+        </div>
+        <div class="pop-actions"><button class="btn quiet bypass">Bypass</button><button class="btn quiet delete">Delete</button></div>
+      </div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <span><svg class="key total" viewBox="0 0 24 12" aria-hidden="true"><path d="M4 6h16"/></svg>EQ</span>
+      <span class="if-connected"><svg class="key stored" viewBox="0 0 24 12" aria-hidden="true"><path d="M4 6h16"/></svg>Saved on buds</span>
+      <span id="peak"></span>
+      <span class="grow"></span>
+      <button id="range" class="btn quiet small">±18 dB</button>
+    </div>
+    <p id="eqmsg" class="msg"></p>
+  </section>
+
+  <section class="actions">
+    <label class="switch">
+      <input id="live" type="checkbox" checked>
+      <span><b>Live preview</b></span>
+    </label>
+    <span class="grow"></span>
+    <p id="savemsg" class="msg"></p>
+    <button id="save" class="btn primary" disabled>Save to buds</button>
+  </section>
+
+  <details class="card fold">
+    <summary>Share, import and export</summary>
+    <div class="fold-body">
+      <div class="row">
+        <button id="copylink" class="btn">Copy link</button>
+        <button id="submit" class="btn">Submit as preset</button>
+        <span class="grow"></span>
+        <button id="export" class="btn quiet">Export text</button>
+        <button id="import" class="btn quiet">Import text</button>
+        <label class="btn quiet file">Open file<input id="file" type="file" accept=".txt,text/plain"></label>
+      </div>
+      <textarea id="apo" spellcheck="false" aria-label="EQ as text" placeholder="Preamp: -6 dB&#10;Filter 1: ON PK Fc 100 Hz Gain -3 dB Q 1.41"></textarea>
+      <p id="sharemsg" class="msg"></p>
+      <p class="hint">Equalizer APO, AutoEq and REW parametric text. Up to 10 filters: bell, shelves, low and high cut.</p>
+    </div>
+  </details>
+
+  <details class="card fold">
+    <summary>Controls</summary>
+    <div class="fold-body">
+      <dl class="keys">
+        <dt>Drag points</dt><dd>Frequency and gain (Hold Shift for fine adjustment)</dd>
+        <dt>Scroll</dt><dd>Q of the selected band</dd>
+        <dt>Drag headphone icon</dt><dd>Sweep frequency with bandpass audio preview</dd>
+        <dt>Double-click background</dt><dd>Add new band</dd>
+        <dt>Double-click point</dt><dd>Toggle bypass</dd>
+        <dt>Right-click, Delete</dt><dd>Removes band</dd>
+        <dt>Arrow keys</dt><dd>Same as dragging points</dd>
+        <dt>A, B</dt><dd>Compare between two settings</dd>
+      </dl>
+    </div>
+  </details>
+
+  <details class="card fold">
+    <summary>Log</summary>
+    <div id="log" class="fold-body log"></div>
+  </details>
+</main>
+
+<footer class="wrap foot">
+  Not affiliated with Fairphone.
+  <a id="source" hidden>Source code</a>
+</footer>
+</body>
+</html>
