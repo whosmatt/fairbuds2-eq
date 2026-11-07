@@ -1,6 +1,7 @@
 # fairbuds2-eq
 
-screenshot1
+<img width="1199" height="817" alt="image" src="https://github.com/user-attachments/assets/65f8da00-9b37-402f-80e7-f86e92f3492b" />
+
 
 Like with the original Fairbuds, the Fairbuds app only exposes limited EQ functionality for the Fairbuds 2.  
 This web app provides the full parametric EQ available on the Fairbuds 2.
