@@ -33,13 +33,12 @@ export class Session {
     this.log(`selected ${this.dev.name || '(unnamed)'}`);
   }
 
-  // The link often drops once right after pairing.
   async open(retries = 3) {
     for (let i = 0; ; i++) {
       try {
         return await this.#open();
       } catch (e) {
-        const transient = /disconnected|connection attempt failed|connection error|unknown reason|timed out/i.test(e.message);
+        const transient = i === 0 || /disconnected|connection attempt failed|connection error|unknown reason|timed out/i.test(e.message);
         if (!transient || /not paired/i.test(e.message) || i >= retries) throw e;
         this.log(`${e.message}, retrying`);
         this.close();
