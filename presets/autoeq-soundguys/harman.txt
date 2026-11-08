@@ -1,0 +1,15 @@
+# Name: Harman
+# Author: AutoEq
+# Description: JM-1 with Harman treble filter, the Harman-style target for this test head.
+# Source: SoundGuys measurement of the Fairbuds 2 (B&K 5128, default ANC mode), Fairbuds default tuning removed.
+Preamp: -6.1 dB
+Filter 1: ON LSC Fc 105 Hz Gain -9.5 dB Q 0.70
+Filter 2: ON HSC Fc 10000 Hz Gain 6.0 dB Q 0.70
+Filter 3: ON PK Fc 178 Hz Gain -7.7 dB Q 0.62
+Filter 4: ON PK Fc 1777 Hz Gain 6.6 dB Q 0.55
+Filter 5: ON PK Fc 5007 Hz Gain -5.6 dB Q 2.62
+Filter 6: ON PK Fc 8243 Hz Gain 4.0 dB Q 1.46
+Filter 7: ON PK Fc 356 Hz Gain -1.6 dB Q 1.92
+Filter 8: ON PK Fc 571 Hz Gain 2.1 dB Q 1.63
+Filter 9: ON PK Fc 1407 Hz Gain -1.3 dB Q 2.39
+Filter 10: ON PK Fc 263 Hz Gain -0.8 dB Q 2.07

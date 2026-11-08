@@ -1,5 +1,6 @@
 [
   { "id": "fairbuds-app", "name": "Fairbuds app", "reference": "default" },
   { "id": "community", "name": "Community" },
-  { "id": "autoeq-fairbuds1", "name": "AutoEq for the original Fairbuds" }
+  { "id": "autoeq-soundguys", "name": "AutoEq (Fairbuds 2) (SoundGuys measurement)" },
+  { "id": "autoeq-fairbuds1", "name": "AutoEq (original Fairbuds)" }
 ]
