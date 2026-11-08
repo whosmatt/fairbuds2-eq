@@ -1,0 +1,13 @@
+# Name: hifi balanced
+# Author: whosmatt
+# Description: Boosted highs and tamed mids with bass roll-off. Adjusted by ear, inspired by a typical 2.0 hifi system response.
+Preamp: -1.3 dB
+Filter 1: ON HPQ Fc 33.3 Hz Q 1.371
+Filter 2: ON PK Fc 55.5 Hz Gain -1.4 dB Q 2.122
+Filter 3: ON PK Fc 202.9 Hz Gain -0.9 dB Q 1.362
+Filter 4: ON PK Fc 546.4 Hz Gain 3.5 dB Q 0.693
+Filter 5: ON PK Fc 1675.2 Hz Gain 1.6 dB Q 1.329
+Filter 6: ON PK Fc 2471.9 Hz Gain -1.2 dB Q 3.644
+Filter 7: ON PK Fc 6991.7 Hz Gain -1.6 dB Q 1.640
+Filter 8: ON PK Fc 11651.1 Hz Gain 8.0 dB Q 0.720
+Filter 9: ON PK Fc 17576.7 Hz Gain 8.1 dB Q 0.779
