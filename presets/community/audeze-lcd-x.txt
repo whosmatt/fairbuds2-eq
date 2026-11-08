@@ -1,0 +1,15 @@
+# Name: LCD-X inspired
+# Author: whosmatt
+# Description: Soundguys measurement AutoEq with Audeze LCD-X response as target, edited to taste.
+# Source: SoundGuys measurement of the Fairbuds 2 (B&K 5128, default ANC mode), Fairbuds default tuning removed, target: LCD-X (2021) as measured by HypetheSonics on a B&K 5128 (half-octave smoothed).
+Preamp: 0.8 dB
+Filter 1: ON LSC Fc 98.3 Hz Gain -0.3 dB Q 0.700
+Filter 2: ON HSC Fc 10000 Hz Gain 6.6 dB Q 0.700
+Filter 3: ON PK Fc 167 Hz Gain -4.7 dB Q 0.770
+Filter 4: ON PK Fc 957.7 Hz Gain 1.0 dB Q 1.480
+Filter 5: ON PK Fc 3167.5 Hz Gain -1.3 dB Q 1.470
+Filter 6: ON PK Fc 6470.1 Hz Gain 4.3 dB Q 0.840
+Filter 7: ON PK Fc 2275.7 Hz Gain 0.9 dB Q 1.920
+Filter 8: ON PK Fc 4790.7 Hz Gain -5.5 dB Q 2.610
+Filter 9: ON PK Fc 556.1 Hz Gain 1.5 dB Q 1.520
+Filter 10: ON PK Fc 324 Hz Gain -2.2 dB Q 1.160
