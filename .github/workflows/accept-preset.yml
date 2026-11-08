@@ -1,0 +1,34 @@
+name: Accept preset
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  preset:
+    if: github.event.label.name == 'accepted'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - id: preset
+        run: node scripts/issue-preset.mjs "$GITHUB_EVENT_PATH" >> "$GITHUB_OUTPUT"
+      - run: node scripts/build.mjs
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          N: ${{ github.event.issue.number }}
+          NAME: ${{ steps.preset.outputs.name }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898299+github-actions[bot]@users.noreply.github.com'
+          git switch -c "preset-$N"
+          git add presets/community
+          git commit -m "Add $NAME preset" -m "Closes #$N"
+          git push -u origin "preset-$N"
+          gh pr create --fill --base main
