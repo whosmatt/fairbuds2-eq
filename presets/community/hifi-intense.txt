@@ -1,0 +1,14 @@
+# Name: hifi intense
+# Author: whosmatt
+# Description: Substantially boosted highs and tamed mids with full bass extension. Adjusted by ear, inspired by a typical 2.1 hifi system response.
+Preamp: -1.3 dB
+Filter 1: ON PK Fc 38 Hz Gain 4.6 dB Q 0.530
+Filter 2: ON PK Fc 89.6 Hz Gain -4.5 dB Q 2.122
+Filter 3: ON PK Fc 199.9 Hz Gain -3.5 dB Q 1.362
+Filter 4: ON PK Fc 492.7 Hz Gain 4.8 dB Q 0.890
+Filter 5: ON PK Fc 1175.5 Hz Gain -1.1 dB Q 0.806
+Filter 6: ON PK Fc 2453.7 Hz Gain -2.4 dB Q 3.644
+Filter 7: ON PK Fc 7254.5 Hz Gain -2.5 dB Q 1.640
+Filter 8: ON PK Fc 12268.7 Hz Gain 9.8 dB Q 0.720
+Filter 9: ON PK Fc 373.1 Hz Gain -3.6 dB Q 4.481
+Filter 10: ON PK Fc 16087 Hz Gain 7.7 dB Q 1.000
