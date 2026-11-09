@@ -99,7 +99,16 @@ export class Session {
     return p;
   }
 
-  async #write(f) {
+  #queue = Promise.resolve();
+
+  // Web Bluetooth rejects overlapping GATT writes
+  #write(f) {
+    const run = this.#queue.then(() => this.#send(f));
+    this.#queue = run.catch(() => {});
+    return run;
+  }
+
+  async #send(f) {
     if (f.length > MAX_FRAME) throw new Error(`frame of ${f.length} bytes is too large`);
     for (let o = 0; o < f.length; ) {
       try {

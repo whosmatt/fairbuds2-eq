@@ -10,7 +10,7 @@ const STORE = 'fb2eq';
 const PEAK_MAX = 12;
 
 let s = null, opening = null, stored = null, connecting = false, sending = false, pending = false, timer = null, soloWidth = 0.7;
-let groups = [];
+let groups = [], liveFailed = false;
 
 const valid = (v) => v && Array.isArray(v.bands) && Number.isFinite(v.pre);
 const slots = (() => {
@@ -111,7 +111,14 @@ async function send() {
   if (!t || !s) return;
   sending = true;
   pending = false;
-  try { await s.live(t); } catch (e) { log(`live update: ${e.message}`); setStatus('Update failed', 'error'); }
+  try {
+    await s.live(t);
+    if (liveFailed) { liveFailed = false; msg('eqmsg', ''); }
+  } catch (e) {
+    log(`live update: ${e.message}`);
+    liveFailed = true;
+    msg('eqmsg', `The last change did not reach the buds: ${e.message}`, 'error');
+  }
   sending = false;
   if (pending) send();
 }
@@ -280,7 +287,8 @@ async function connect() {
       const r = toBands(stored);
       slots.A = { pre: r.pre, bands: r.bands };
       slots.B = clone(slots.A);
-      changed(false);
+      persist();
+      render();
     }
     await refreshAppPresets();
     if ($('live').checked) kick(true);

@@ -37,6 +37,8 @@ A band is `{ on, type, f, gain, q }` with `type` one of `peak`, `lowshelf`, `hig
 
 - **Live sending is a throttle, not a debounce.** The next update goes out as soon as the previous one is acknowledged,
   always with the latest state. A debounce makes drags silent until the pointer stops.
+- **Writes are serialised** in `Session`. Chromium rejects overlapping GATT writes, and interleaved chunks of two
+  frames corrupt both; the connect sequence and live updates do overlap.
 - **Solo**: while the headphone handle is held, the buds get `solo()`: two band-pass sections at the band's frequency,
   0 dB peak at `REF_GAIN`, nothing else. Releasing restores the EQ (or the stored EQ with live preview off).
 - **Live preview off** means the buds play what is stored; toggling it sends that.
