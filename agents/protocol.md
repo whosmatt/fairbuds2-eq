@@ -1,6 +1,6 @@
 # Fairbuds 2 protocol
 
-What the page relies on. Everything here was verified against Fairbuds 2 firmware 0.4.1 unless marked otherwise.
+What the page relies on. Everything here was verified against Fairbuds 2 firmware 0.4.1 unless marked otherwise; 0.4.3 reads and applies EQ the same way.
 
 ## Hardware
 
@@ -79,9 +79,9 @@ halved. The app normalises every section to b0 = 1 and multiplies the b0 values 
 
 | key | content |
 |---|---|
-| `0xE42C` | custom EQ blob (without the `00` prefix), applied at boot |
+| `0xE42C` | custom EQ blob (without the `00` prefix), applied at boot. Empty (length 0) until a custom EQ has been saved |
 | `0xE410`–`0xE414` | built-in presets: Default, Balance, Bass boost, Treble boost, Voice |
-| `0xE402` | preset group table: count, then per group n + n × (index, key) |
+| `0xE402` | preset group table: count, then per group n + n × (index, key). Five groups on reset buds; the app adds a sixth for `0xE42C` |
 | `0xEF00`, `0xEF10`, `0xEF20` | the app's slider state; the page does not write them |
 
 All built-in presets share a base tuning (high shelf 3.5 kHz +5 dB, bells at 2.2 kHz +4.5, 86 Hz −1.6, 175 Hz −4,

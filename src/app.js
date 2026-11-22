@@ -216,7 +216,9 @@ function setConnected(on) {
 }
 
 async function readStored() {
-  stored = parseTables(await s.nvRead(EQ_KEY));
+  const t = parseTables(await s.nvRead(EQ_KEY));
+  stored = t.length === 4 ? t : null;
+  if (!stored) msg('savemsg', 'No custom EQ saved.');
   presetMenu();
   render();
 }
@@ -283,7 +285,7 @@ async function connect() {
   try {
     bothBuds(await s.partnerReachable());
     await readStored();
-    if (slots.fresh) {
+    if (slots.fresh && stored) {
       const r = toBands(stored);
       slots.A = { pre: r.pre, bands: r.bands };
       slots.B = clone(slots.A);
