@@ -44,6 +44,8 @@ type `5A` command, `5B` response, `5D` notification. Responses can span several 
 | `0A03` | length u16 | `01` | reclaim space before a write |
 | `0A01` | key u16 + data | `00` | write NVKEY |
 | `09FD` | `00` + key u16 | `00` | sent by the app after writing the EQ key; does not apply it |
+| `0900` | `00 00` + group u8 | `00 00 00` | select the EQ the buds play: a group of `0xE402`, counted from 1. Kept across power cycles; the partner follows |
+| `0901` | `00 00` | `00 00 00` + group | read the selected group |
 | `0D00` | | `05 06` | partner bud reachable (`00 00`: not) |
 | `0D01` | `05 06` + inner frame | `00`, then `5D 0D01 05 06 <inner response>` | relay to the partner bud |
 
@@ -94,10 +96,19 @@ Same order as the app:
 1. `0D00` must return `05 06`; refuse otherwise.
 2. `0E03` with the new tables, so the change is audible now.
 3. On the partner (relayed), then on the connected bud: `0A03` with the blob length, then `0A01 2C E4 <blob>`.
-4. `09FD 00 2C E4` on the partner, then on the connected bud.
-5. Read `0xE42C` back from both and compare.
+4. If `0xE402` on a bud has no group for `0xE42C`, append one (`01 00 00 00 2C E4`, count + 1) and write it, partner first.
+5. `09FD 00 2C E4` on the partner, then on the connected bud.
+6. Read `0xE42C` back from both and compare.
+7. `0900 00 00 <group>` on the connected bud, `0901` to confirm. The app does not relay it either.
 
-Any EQ change in the Fairbuds app overwrites `0xE42C`. The app keeps showing its own slider state.
+Without step 7 the buds keep playing the preset selected in the app; `0xE42C` only matters while its group is selected.
+Picking a preset in the app sends only `0900`; picking custom writes `0xEF00`/`0xEF10`/`0xEF20`, `0xE42C` and `0xE402`,
+then selects the group. Any EQ change in the Fairbuds app overwrites `0xE42C`. The app keeps showing its own slider state.
+
+The app does not take its displayed preset from `0901`: it always shows the preset picked in it last, also after a
+fresh start and when the buds were switched to another built-in preset (app 5.3.0).
+
+The app itself talks RACE over RFCOMM (channel 21 on Android), not GATT.
 
 ## Not known
 

@@ -10,11 +10,27 @@ const RX = '43484152-2dab-3141-6972-6f6861424c45';
 const MAX_FRAME = 1251;
 const PARTNER = [0x05, 0x06];
 export const EQ_KEY = 0xe42c;
+const GROUP_KEY = 0xe402;
 export const PRESET_KEYS = [[0xe410, 'Default'], [0xe411, 'Balance'], [0xe412, 'Bass boost'], [0xe413, 'Treble boost'], [0xe414, 'Voice']];
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const isPartner = (d) => d.length === 2 && d[0] === PARTNER[0] && d[1] === PARTNER[1];
 const hex = (v) => `0x${v.toString(16)}`;
+
+// 0xE402: count, then per group n + n × (index, key). The buds play the group selected with 0x0900, counted from 1.
+// Returns the group of `key` and the table to write, or null if it already has one.
+export function addGroup(table, key) {
+  const groups = [];
+  for (let o = 2, i = 0; i < rd16(table, 0); i++) {
+    const n = rd16(table, o);
+    groups.push(Array.from({ length: n }, (_, j) => rd16(table, o + 4 + 4 * j)));
+    o += 2 + 4 * n;
+  }
+  const i = groups.findIndex((g) => g.includes(key));
+  if (i >= 0) return [i + 1, null];
+  if (!table.length) table = u16(0);
+  return [groups.length + 1, [...u16(groups.length + 1), ...table.slice(2), ...u16(1), ...u16(0), ...u16(key)]];
+}
 
 export class Session {
   constructor(log = () => {}) {
@@ -162,18 +178,30 @@ export class Session {
     await this.cmd(0x0e03, [0, ...buildTables(tables)]);
   }
 
-  // Same order as the app: partner first, then this bud, then notify both.
+  // Same order as the app: partner first, then this bud, then notify both, then select the custom group.
   async save(tables) {
     const blob = buildTables(tables);
     if (!(await this.partnerReachable())) throw new Error('both buds must be connected to save');
     await this.live(tables);
     await this.nvWrite(EQ_KEY, blob, true);
     await this.nvWrite(EQ_KEY, blob);
+    let group;
+    for (const partner of [true, false]) {
+      const [n, table] = addGroup(await this.nvRead(GROUP_KEY, partner), EQ_KEY);
+      if (group && n !== group) throw new Error('the buds have different preset groups');
+      group = n;
+      if (table) await this.nvWrite(GROUP_KEY, table, partner);
+    }
     await this.relay(0x09fd, [0, ...u16(EQ_KEY)]);
     await this.cmd(0x09fd, [0, ...u16(EQ_KEY)]);
     for (const partner of [false, true]) {
       const r = await this.nvRead(EQ_KEY, partner);
       if (r.length !== blob.length || r.some((v, i) => v !== blob[i])) throw new Error(`verification failed on the ${partner ? 'other' : 'connected'} bud`);
     }
+    // The app sends this to the connected bud only.
+    await this.cmd(0x0900, [0, 0, group]);
+    const sel = await this.cmd(0x0901, [0, 0]);
+    if (sel[3] !== group) throw new Error(`the buds did not switch to the saved EQ (group ${sel[3]})`);
+    this.log(`selected group ${group}`);
   }
 }

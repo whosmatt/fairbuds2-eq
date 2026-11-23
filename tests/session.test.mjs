@@ -44,3 +44,15 @@ test('concurrent commands never overlap or interleave on the wire', async () => 
   assert.deepEqual(buds.received.map((f) => rd16(f, 4)), [0x0e03, 0x0a00, 0x0a00, 0x0e03, 0x0a00]);
   assert.ok(buds.received.every((f) => f[0] === 5 && f[1] === 0x5a));
 });
+
+test('addGroup appends the custom EQ to the preset groups once', async () => {
+  const { addGroup } = await import('../src/race.js');
+  const hex = (h) => Uint8Array.from(h.match(/../g), (x) => parseInt(x, 16));
+  const five = hex('05000200000010e401002ae40200000011e401002be40100000012e40100000013e40100000014e4');
+  const six = hex('06000200000010e401002ae40200000011e401002be40100000012e40100000013e40100000014e4010000002ce4');
+  const [n, table] = addGroup(five, 0xe42c);
+  assert.equal(n, 6);
+  assert.deepEqual(table, [...six]);
+  assert.deepEqual(addGroup(six, 0xe42c), [6, null]);
+  assert.deepEqual(addGroup(six, 0xe411), [2, null]);
+});

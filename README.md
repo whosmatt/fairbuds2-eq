@@ -8,7 +8,8 @@ The interface is inspired by Fabfilter Pro-Q.
 All changes can be heard live and only persist after clicking save.
 
 > [!NOTE]
-> You can use the Fairbuds app as usual, but any EQ changes made there will overwrite the EQ set by this web app.
+> You can use the Fairbuds app as usual, but any EQ changes made there will overwrite the EQ set by this web app.  
+> The Fairbuds app will show whatever EQ you last selected regardless of what you do in fairbuds2-eq. This is only cosmetic and can't be fixed from here.
 
 Unofficial and not affiliated with Fairphone.
 
